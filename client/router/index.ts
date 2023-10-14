@@ -7,6 +7,8 @@ import LoginView from "../views/LoginView.vue";
 import MainView from "../views/MainView.vue";
 import NotFoundView from "../views/NotFoundView.vue";
 import SettingView from "../views/SettingView.vue";
+import ConnectView from "../views/ConnectView.vue";
+
 
 const router = createRouter({
   history: createWebHistory(),
@@ -20,6 +22,11 @@ const router = createRouter({
       path: "/main",
       name: "Main",
       component: MainView,
+    },
+    {
+      path: "/connect",
+      name: "Connect",
+      component: ConnectView
     },
     {
       path: "/setting",
