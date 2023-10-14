@@ -1,4 +1,8 @@
 /* Add some global styles here! */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 
 :root {
   --red: rgb(208, 67, 12);
