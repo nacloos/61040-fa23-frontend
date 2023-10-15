@@ -43,6 +43,23 @@ export default class NoteConcept {
         await this.notes.deleteMany({});
         return { msg: "All notes deleted successfully!" };
     }
+
+    async search(query: string) {
+        const items = await this.notes.readMany({ content: { $regex: query, $options: "i" } });
+        // const items = await this.notes.readMany({ $text: { $search: query } });
+        return items
+        // TODO: it doesn't return a json
+        // return this.notes.collection.aggregate([
+        //     {
+        //         "$search": {
+        //             "text": {
+        //                 "query": query,
+        //                 "path": "content"
+        //             }
+        //         }
+        //     }
+        // ])
+    }
 }
 
 
