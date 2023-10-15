@@ -25,7 +25,7 @@ export default class UserConcept {
   async getUserById(_id: ObjectId) {
     const user = await this.users.readOne({ _id });
     if (user === null) {
-      throw new NotFoundError(`UserId not found!`);
+      throw new NotFoundError(`User not found!`);
     }
     return this.sanitizeUser(user);
   }
@@ -33,7 +33,7 @@ export default class UserConcept {
   async getUserByUsername(username: string) {
     const user = await this.users.readOne({ username });
     if (user === null) {
-      throw new NotFoundError(`Username not found!`);
+      throw new NotFoundError(`User not found!`);
     }
     return this.sanitizeUser(user);
   }

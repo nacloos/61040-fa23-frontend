@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import Item from "@/components/Item/Item.vue";
 import { authenticateWithDropbox, getAccessTokenFromUrl, getOrCreateSharedLink, isAuthenticated } from '@/utils/dropbox';
 import { Dropbox } from 'dropbox';
 import { computed, ref } from 'vue';
-import Item from "@/components/Item/Item.vue";
 
 const CLIENT_ID = 'd89ybibvjuhoiak';
 const REDIRECT_URI = 'http://localhost:5173/connect';
@@ -41,8 +41,10 @@ const figures = computed(() => files.value
     .filter(file => file.path_display.endsWith(".png"))
     .map(file => ({ 
         type: "figure", 
+        path: file.path_display,
+        name: file.name.split(".")[0],
         content: {
-            imageURL: file.url 
+            imageURL: file.url,
         }
     }))
 );

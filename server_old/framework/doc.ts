@@ -108,14 +108,11 @@ export default class DocCollection<Schema extends BaseDoc> {
   /**
    * Update the document that matches `filter` based on existing fields in `update`.
    */
-  async updateOne(filter: Filter<Schema>, update: Partial<Schema>, opUpdate?: any, options?: FindOneAndUpdateOptions): Promise<UpdateResult<Schema>> {
+  async updateOne(filter: Filter<Schema>, update: Partial<Schema>, options?: FindOneAndUpdateOptions): Promise<UpdateResult<Schema>> {
     this.sanitizeItem(update);
     this.sanitizeFilter(filter);
     update.dateUpdated = new Date();
-
-    // allow other operators to be used
-    const fullUpdate = { $set: update, ...opUpdate};
-    return await this.collection.updateOne(filter, fullUpdate, options);
+    return await this.collection.updateOne(filter, { $set: update }, options);
   }
 
   /**

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ItemMenu from "@/components/Item/ItemMenu.vue";
-import FigureItem from "./FigureItem.vue";
 import ConfigItem from "./ConfigItem.vue";
+import FigureItem from "./FigureItem.vue";
 
 // const props = defineProps({
 //   imageURL: String
@@ -31,19 +31,39 @@ if (!ItemComponent) {
     throw new Error(`Invalid item type: ${item.type}`)
 }
 
+// discard leading "/" and file name
+const itemPaths = item.path.split("/").slice(1, -1).join(" / ");
 
 // TODO: content dict to specify the item generically
 
 </script>
 
 <template>
-<div class="flex flex-col py-10">
-    <div class="card card-compact w-96 bg-base-100 border-2 shadow">
+<div class="flex flex-col py-10 w-96">
+    <!-- <div class="text-xs text-neutral-300 breadcrumbs">
+        <ul>
+            <li v-for="word in item.path.slice(1, -1).split('/')">
+                {{ word }}
+            </li>
+        </ul>
+    </div> -->
+    <div class="w-96 px-2 py-1 text-xs text-neutral-300">
+        <p>{{ itemPaths }}</p>
+    </div>
+
+    <div class="card card-compact bg-base-100 border-2 shadow">
         <div class="card-body">
             <div class="card-actions">
-                <div class="flew grow"><strong>{{ itemTitle }}</strong></div>
+                <div class="flex grow">
+                    <!-- <div class="itemTitle font-bold mr-1 pr-1 border-neutral-600">{{ itemTitle }}</div>
+                    <div class="itemName pl-1">{{ item.name }}</div> -->
+
+                    <p><strong>{{ itemTitle }}</strong></p>
+                </div>
+                
                 <ItemMenu />
-<!-- 
+                
+                <!-- 
                 <button>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
@@ -71,4 +91,11 @@ if (!ItemComponent) {
     border-color: #dddddd;
     border-width: 1.5px;
 }
+
+/* .itemName {
+    border-left-width: 1.5px;
+    border-color: black;
+} */
+
 </style>
+

@@ -5,7 +5,7 @@ import { storeToRefs } from "pinia";
 import { computed } from "vue";
 import { RouterLink, useRoute } from "vue-router";
 
-import SearchButton from "@/components/SearchButton.vue";
+import Search from "@/components/Search.vue";
 
 const currentRoute = useRoute();
 const currentRouteName = computed(() => currentRoute.name);
@@ -28,7 +28,7 @@ const { toast } = storeToRefs(useToastStore());
         </RouterLink>
       </div>
 
-      <SearchButton />
+      <Search />
   
 
       <div class="join space-x-0">

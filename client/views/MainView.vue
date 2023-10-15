@@ -2,6 +2,7 @@
 import Item from "@/components/Item/Item.vue";
 import NoteItem from "@/components/Item/NoteItem.vue";
 import ConfigItem from "@/components/Item/ConfigItem.vue";
+import ItemList from "@/components/Item/ItemList.vue";
 import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
 const { currentUsername, isLoggedIn } = storeToRefs(useUserStore());
@@ -70,11 +71,12 @@ const items = [
 <!-- TODO: center search input -->
 <template>
 <main>
+  <ItemList />
 
     <!-- <div class="flex flex-col items-center justify-center"> -->
-      <div class="flex space-x-4">
+      <!-- <div class="flex space-x-4">
         <Item v-for="item in items" :item="item" />
-      </div>
+      </div> -->
   <!-- </div> -->
 </main>
 </template>
