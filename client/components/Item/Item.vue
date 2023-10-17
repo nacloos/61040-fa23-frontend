@@ -32,14 +32,17 @@ if (!ItemComponent) {
 }
 
 // discard leading "/" and file name
-const itemPaths = item.path.split("/").slice(1, -1).join(" / ");
+let itemPaths = "";
+if (item.path) {
+    itemPaths = item.path.split("/").slice(1, -1).join(" / ");
+}
 
 // TODO: content dict to specify the item generically
 
 </script>
 
 <template>
-<div class="flex flex-col py-10 w-96">
+<div class="flex flex-col py-5 w-96">
     <!-- <div class="text-xs text-neutral-300 breadcrumbs">
         <ul>
             <li v-for="word in item.path.slice(1, -1).split('/')">
@@ -51,7 +54,8 @@ const itemPaths = item.path.split("/").slice(1, -1).join(" / ");
         <p>{{ itemPaths }}</p>
     </div>
 
-    <div class="card card-compact bg-base-100 border-2 shadow">
+    <!-- add shadow? -->
+    <div class="card card-compact bg-base-100 border-2"> 
         <div class="card-body">
             <div class="card-actions">
                 <div class="flex grow">

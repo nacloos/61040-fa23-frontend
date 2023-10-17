@@ -14,12 +14,12 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      path: "/",
+      path: "/oldhome",
       name: "Home",
       component: HomeView,
     },
     {
-      path: "/main",
+      path: "/",
       name: "Main",
       component: MainView,
     },

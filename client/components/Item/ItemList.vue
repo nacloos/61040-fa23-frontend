@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { onBeforeMount, ref } from "vue";
 import { fetchy } from "@/utils/fetchy";
+import Item from "@/components/Item/Item.vue";
 
-
+const loaded = ref(false);
 const items = ref([]);
 
 async function getItems() {
@@ -14,13 +15,33 @@ async function getItems() {
         return;
     }
     console.log("results:", results);
-    items.value = results;
+    items.value = results.map((res: any) => ({
+        type: "figure",
+        // path: result.path,
+        // name: result.name,
+        content: {
+            imageURL: res.item.image.url,
+            note: res.item.note.content
+        }
+    }));
+
 }
 
-getItems();
+onBeforeMount(async () => {
+    await getItems();
+    loaded.value = true;
+});
 
 </script>
 
 <template>
-{{  items }}
+<!-- {{  items }} -->
+
+<div v-if="loaded" class="flex flex-col items-center justify-center">
+    <!-- <div class="flex space-x-4"> -->
+    <div>
+        <!-- <p v-for="item in items">{{ item }}</p> -->
+        <Item v-for="item in items" :item="item" />
+    </div>
+</div>
 </template>

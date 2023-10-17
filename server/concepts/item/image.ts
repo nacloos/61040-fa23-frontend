@@ -19,6 +19,7 @@ export default class ImageConcept {
         }
         
         const _id = await this.images.createOne({ url });
+        console.log("Image created successfully!", url);
         return _id;
     }
 

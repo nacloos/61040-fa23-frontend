@@ -178,8 +178,10 @@ class Routes {
   async createFigure(session: WebSessionDoc, imageURL: string, config: string, note: string) {
     const user = WebSession.getUser(session);
 
+    // TODO: error when url format is not correct
     const noteId = await Note.create(note);
     const configId = await Config.create(config);
+    console.log("create image", imageURL);
     const imageId = await Image.create(imageURL);
     const figId = await Figure.create(imageId, configId, noteId);
     // ensure that the figure is shared as a whole (e.g. don't want to just share the image without the config)
@@ -246,13 +248,13 @@ class Routes {
     return notes.concat(figs);
   }
 
-  @Router.delete("/items")
-  async deleteAllItems(session: WebSessionDoc) {
-    await Note.deleteAll();
-    await Figure.deleteAll();
-    await ShareableFigure.deleteAll({});
-    return { msg: "All items deleted!" };
-  }
+  // @Router.delete("/items")
+  // async deleteAllItems(session: WebSessionDoc) {
+  //   await Note.deleteAll();
+  //   await Figure.deleteAll();
+  //   await ShareableFigure.deleteAll({});
+  //   return { msg: "All items deleted!" };
+  // }
 
   // @Router.get("/items")
   // async getAllItems(owner?: string) {
