@@ -13,9 +13,11 @@ function toggleCreateModal() {
     }
     // Use DaisyUI's modal API
     if (isCreateModalOpen.value) {
-        createModal.value.close();
+        // TODO: temp fix for type error
+        (createModal.value as any).close();
     } else {
-        createModal.value.showModal();
+        // TODO: temp fix for type error
+        (createModal.value as any).showModal();
     }
     isCreateModalOpen.value = !isCreateModalOpen.value;
 }

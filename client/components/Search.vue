@@ -11,14 +11,16 @@ const toggleSearchModal = () => {
     }
     // Use DaisyUI's modal API
     if (isModalOpen.value) {
-        searchModal.value.close();
+        // TODO: temp fix for type error
+        (searchModal.value as any).close();
     } else {
-        searchModal.value.showModal();
+        // TODO: temp fix for type error
+        (searchModal.value as any).showModal();
     }
     isModalOpen.value = !isModalOpen.value;
 };
 
-const keydownListener = (event) => {
+const keydownListener = (event: any) => {
     // Check if 'CTRL+K' was pressed
     if (event.ctrlKey && event.code === 'KeyK') {
         event.preventDefault(); // Prevent the default CTRL+K behavior (e.g., browser search)

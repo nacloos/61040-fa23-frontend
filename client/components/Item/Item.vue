@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import ItemMenu from "@/components/Item/ItemMenu.vue";
-import ConfigItem from "./ConfigItem.vue";
+import ConfigItem from "@/components/Item/ConfigItem.vue";
 import FigureItem from "./FigureItem.vue";
 
 // const props = defineProps({
@@ -26,7 +26,8 @@ const props = defineProps(["item"])
 const item = props.item;
 const itemTitle = item.type.charAt(0).toUpperCase() + item.type.slice(1);
 
-const ItemComponent = componentMap[item.type]; 
+// TODO: temp fix for type error
+const ItemComponent = (componentMap as any)[item.type]; 
 if (!ItemComponent) {
     throw new Error(`Invalid item type: ${item.type}`)
 }

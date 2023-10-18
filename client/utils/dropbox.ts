@@ -11,11 +11,12 @@ export function isAuthenticated() {
 
 export async function authenticateWithDropbox(client_id: string, redirect_uri: string) {
   const dbx = new Dropbox({ clientId: client_id });
-  const authUrl = await dbx.auth.getAuthenticationUrl(redirect_uri);
+  // TODO: temp fix for type error
+  const authUrl = await (dbx as any).auth.getAuthenticationUrl(redirect_uri);
   window.location.href = authUrl;
 }
 
-export async function getOrCreateSharedLink(dbx: Dropbox, file) {
+export async function getOrCreateSharedLink(dbx: Dropbox, file: any) {
   const response = await dbx.sharingListSharedLinks({ path: file.path_display });
   if (response.result.links && response.result.links.length > 0) {
       return response.result.links[0].url.replace('dl=0', 'raw=1');
@@ -43,8 +44,11 @@ function parseQueryString(str: String) {
     // Firefox (pre 40) decodes `%3D` to `=`
     // https://github.com/sindresorhus/query-string/pull/37
     let key = parts.shift();
-    let val = parts.length > 0 ? parts.join("=") : undefined;
+    let val: any = parts.length > 0 ? parts.join("=") : undefined;
 
+    if (key === undefined) {
+      return;
+    }
     key = decodeURIComponent(key);
 
     // missing `=` should be `null`:

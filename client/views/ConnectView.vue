@@ -11,11 +11,15 @@ let accessToken = ref<string | null>(null);
 
 if (isAuthenticated()) {
     accessToken.value = getAccessTokenFromUrl();
+    if (!accessToken.value) {
+        throw new Error("Access token not found in URL");
+    }
     const dbx = new Dropbox({ accessToken: accessToken.value });
 
     dbx.filesListFolder({ path: '', recursive: true })
     .then(async (response: any) => {
-        const entries = response.result.entries;
+        // TODO: temp fix for type error
+        const entries = <Array<any>>response.result.entries;
         const newFiles = entries.filter(entry => entry[".tag"] === "file").slice(0, 6);
 
         for (const file of newFiles) {
@@ -36,7 +40,8 @@ if (isAuthenticated()) {
     authenticateWithDropbox(CLIENT_ID, REDIRECT_URI);
 }
 
-const files = ref([]);
+// TODO: temp fix for type error
+const files = ref<Array<any>>([]);
 const figures = computed(() => files.value
     .filter(file => file.path_display.endsWith(".png"))
     .map(file => ({ 
