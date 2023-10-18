@@ -3,6 +3,12 @@ import { onBeforeMount, ref } from "vue";
 import { fetchy } from "@/utils/fetchy";
 import Item from "@/components/Item/Item.vue";
 
+import { useUserStore } from "@/stores/user";
+import { storeToRefs } from "pinia";
+
+
+const { isLoggedIn } = storeToRefs(useUserStore());
+
 const loaded = ref(false);
 const items = ref([]);
 
@@ -35,8 +41,7 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-<!-- {{  items }} -->
-
+<!-- TODO: show only accessible items -->
 <div v-if="loaded" class="flex flex-col items-center justify-center">
     <!-- <div class="flex space-x-4"> -->
     <div>
