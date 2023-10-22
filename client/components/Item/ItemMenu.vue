@@ -36,7 +36,7 @@ const openDropdown = () => {
 <!-- <div class="dropdown dropdown-bottom dropdown-end" :class="{ 'open': isDropdownOpen }"> -->
 <div class="dropdown dropdown-bottom dropdown-end">
   <label ref="dropdownButton" tabindex="0" class="btn bg-white border-0 p-0 min-h-0 h-fit" @click="openDropdown">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
       <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
     </svg>
   </label>
