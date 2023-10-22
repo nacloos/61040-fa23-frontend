@@ -9,6 +9,7 @@ import { NoteDoc } from "./concepts/item/note";
 import { UserDoc } from "./concepts/user";
 import { WebSessionDoc } from "./concepts/websession";
 import Responses from "./responses";
+import { parse } from "path";
 
 type ItemType = typeof Figure | typeof Note;
 type ShareableType = typeof ShareableFigure | typeof ShareableNote;
@@ -264,12 +265,13 @@ class Routes {
   async getFigureComments(session: WebSessionDoc, id: ObjectId) {
     const comments =  await FigureComment.getComments(id);
     
+    const parsedComments = [];
     for (const comment of comments) {
       const user = await User.getUserById(comment.user);
-      comment.user = user.username;
+      parsedComments.push({ ...comment, user: user.username });
     }
 
-    return comments;
+    return parsedComments;
   }
 
   @Router.get("/users/:username/items")
