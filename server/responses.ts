@@ -23,7 +23,10 @@ export default class Responses {
     const itemId = shareableItem.item
     const item = await itemConcept.getItem(itemId);
     item["_id"] = itemId;
-    return { ...shareableItem, item: item };
+
+    // return username instead of id
+    const owner = await User.getUserById(shareableItem.owner);
+    return { ...shareableItem, owner: owner.username, item: item };
   }
 
   // TODO: same as getPosts for improved performance

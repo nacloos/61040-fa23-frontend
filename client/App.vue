@@ -4,7 +4,6 @@ import { onBeforeMount } from "vue";
 import { RouterView } from "vue-router";
 
 import Header from "@/components/Header.vue";
-import Footer from "@/components/Footer.vue";
 
 const userStore = useUserStore();
 
@@ -21,10 +20,10 @@ onBeforeMount(async () => {
 <template>
   <Header />
   <RouterView class="py-14" />
-  <Footer />
 </template>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import "./assets/toast.css";
 
 /* nav {

@@ -209,9 +209,26 @@ class Routes {
   }
 
   @Router.get("/figures")
-  async getFigures() {
-    const items = await ShareableFigure.getItems({});
-    console.log(items);
+  async getFigures(session: WebSessionDoc) {
+    const user = WebSession.getUser(session);
+    console.log("get figures", user)
+    // const items = await ShareableFigure.getItems({});
+    // the user is only allowed to access figures that he owns or is a collaborator of
+    const itemIds = await ShareableFigure.getAccessibleItems(user);
+    console.log("accessibleIds", itemIds);
+    // const items = await Promise.all(itemIds.map((id) => ShareableFigure.getItem(id)));
+    // console.log(items);
+
+    let items = [];
+    for (const id of itemIds) {
+      try {
+        items.push(await ShareableFigure.getItem(id));
+      } catch (e) {
+        // TODO: shouldn't happen
+        console.log("item not found", id);
+      }
+    }
+    console.log("items", items)
     return Responses.items(Figure, items);
   }
 
@@ -220,23 +237,39 @@ class Routes {
     return addCollaborator(ShareableFigure, session, _id, collaborator);
   }
 
-  @Router.delete("/figures/:_id/collaborators")
+  @Router.delete("/figures/:_id/collaborators/:collaborator")
   async removeFigureCollaborator(session: WebSessionDoc, _id: ObjectId, collaborator: string) {
     return removeCollaborator(ShareableFigure, session, _id, collaborator);
   }
 
-  @Router.post("/figure/:id/comments")
-  async createFigureComment(session: WebSessionDoc, item: ObjectId, content: string) {
+  @Router.get("/figures/:_id/collaborators")
+  async getFigureCollaborators(session: WebSessionDoc, _id: ObjectId) {
+    const user = WebSession.getUser(session);
+    await ShareableFigure.hasAccess(user, _id);
+    const item = await ShareableFigure.getItem(_id);
+    const collaborators = await User.idsToUsernames(item.collaborators);
+    return collaborators;
+  }
+
+  @Router.post("/figures/:id/comments")
+  async createFigureComment(session: WebSessionDoc, id: ObjectId, content: string) {
     const user = WebSession.getUser(session);
     // make sure the item is shareable and the user has access to it
-    await ShareableFigure.hasAccess(user, item);
-    await FigureComment.create(user, item, content);
+    await ShareableFigure.hasAccess(user, id);
+    await FigureComment.create(user, id, content);
     return "Created comment successfully!";
   }
 
-  @Router.get("/figure/:id/comments")
-  async getFigureComments(session: WebSessionDoc, item: ObjectId) {
-    return await FigureComment.getComments(item);
+  @Router.get("/figures/:id/comments")
+  async getFigureComments(session: WebSessionDoc, id: ObjectId) {
+    const comments =  await FigureComment.getComments(id);
+    
+    for (const comment of comments) {
+      const user = await User.getUserById(comment.user);
+      comment.user = user.username;
+    }
+
+    return comments;
   }
 
   @Router.get("/users/:username/items")

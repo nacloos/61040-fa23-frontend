@@ -2,6 +2,7 @@
 import { onBeforeMount, ref } from "vue";
 import { fetchy } from "@/utils/fetchy";
 import Item from "@/components/Item/Item.vue";
+import Footer from "@/components/Footer.vue";
 
 import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
@@ -23,14 +24,17 @@ async function getItems() {
     console.log("results:", results);
     items.value = results.map((res: any) => ({
         type: "figure",
+        id: res._id,
+        owner: res.owner,
         // path: result.path,
         // name: result.name,
         content: {
             imageURL: res.item.image.url,
             note: res.item.note.content
         }
-    }));
-
+    })).reverse()
+    ;
+    console.log("items:", items.value)
 }
 
 onBeforeMount(async () => {
@@ -46,7 +50,11 @@ onBeforeMount(async () => {
     <!-- <div class="flex space-x-4"> -->
     <div>
         <!-- <p v-for="item in items">{{ item }}</p> -->
-        <Item v-for="item in items" :item="item" />
+        <!-- not sure why but adding :key="item.id" makes the items refresh correctly (otherwise the image and text wouldn't update when deleting item). Thanks ChatGPT! -->
+        <Item v-for="item in items" :key="item.id" :item="item" @refreshItems="getItems"/>
     </div>
 </div>
+
+<Footer @refreshItems="getItems" />
+
 </template>

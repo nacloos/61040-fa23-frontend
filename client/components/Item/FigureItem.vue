@@ -16,8 +16,12 @@ const note = props.content.note;
     </div>
     
     <div class="pt-2">
-        <h2><strong>Note</strong></h2>
-        <p>{{ note }}</p>
+        <div v-if="note">
+            <p class="text-sm"><strong>Note</strong></p>
+            <p class="text-sm">{{ note }}</p>
+        </div>
     </div>
 </div>
 </template>
+
+

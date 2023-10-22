@@ -3,10 +3,13 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
   --red: rgb(208, 67, 12);
   --base-bg: #f1f3f5;
+}
+
+body {
+  /* font-family: 'Roboto', sans-serif; */
 }
 
 button.btn-small {
@@ -33,4 +36,10 @@ a.button {
   justify-content: center;
   align-items: center;
   gap: 1em;
+}
+
+
+.CodeMirror {
+  border-radius: 8px;
+  border: 1px solid #ddd;
 }

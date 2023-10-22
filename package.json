@@ -4,16 +4,12 @@
   "scripts": {
     "dev:client": "vite",
     "build:client": "vue-tsc -p client/tsconfig.json --noEmit && vite build",
-    
     "build:client:notypecheck": "vite build",
-
     "dev:server": "npm run build:server && concurrently \"tsc -p server/tsconfig.json -w\" \"nodemon -r source-map-support/register dist-server/api/index.js\"",
     "build:server": "tsc -p server/tsconfig.json",
     "start:server": "npm run build:server && node -r source-map-support/register dist-server/api/index.js",
-    
     "build2": "npm run build:client && npm run build:server",
     "build": "npm run build:client:notypecheck && npm run build:server",
-
     "lint:client": "eslint client/ --ext .ts && prettier client/ --check",
     "lint:server": "eslint server/ --ext .ts && prettier server/ --check",
     "format:client": "eslint client/ --ext .ts --fix && prettier client/ --write",
@@ -53,6 +49,8 @@
     "vue-tsc": "^1.8.11"
   },
   "dependencies": {
+    "@types/codemirror": "^5.60.12",
+    "codemirror": "^5.65.15",
     "connect-mongo": "^5.0.0",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",

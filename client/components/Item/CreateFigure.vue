@@ -33,6 +33,7 @@ async function createFigure(imageURL: string, config: string, note: string) {
     <div class="space-y-1">
         <label>Image</label>
         <input type="text" v-model="imageURL" placeholder="url..." class="input input-bordered py-2 min-h-0 h-full w-full" />
+        <img :src="imageURL" alt="" class="object-scale-down" />
     </div>
     <div class="space-y-1">
         <label>Config</label>

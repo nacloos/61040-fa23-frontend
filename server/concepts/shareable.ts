@@ -62,7 +62,7 @@ export default class ShareableConcept {
     async getItem(_id: ObjectId) {
         const item = await this.items.readOne({ _id });
         if (!item) {
-          throw new NotFoundError(`Item ${_id} does not exist!`);
+            throw new NotFoundError(`Item ${_id} does not exist!`);
         }
         return item
     }
@@ -122,7 +122,8 @@ export default class ShareableConcept {
     }
 
     async getAccessibleItems(user: ObjectId) {
-        const accessibleItems = await this.accessibleItems.readMany({ user });
+        const accessibleItems = (await this.accessibleItems.readMany({ user })).map(a => a.item);
+
         if (!accessibleItems) {
             throw new NotFoundError(`User ${user} does not have any items!`);
         }
