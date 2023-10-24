@@ -57,7 +57,7 @@ function toggleCreateModal() {
 </div>
 
 <dialog ref="createModal" id="search_modal" class="modal">
-    <div class="modal-box w-80 max-w-5xl">
+    <div class="modal-box w-96 max-w-5xl">
         <!-- <CreateFigure /> -->
         <!-- TODO: refreshItems -->
         <CreateFigure @figureCreated="figureCreated" />
