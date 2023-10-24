@@ -10,20 +10,36 @@ import { onMounted, ref } from 'vue';
 import { stringify } from 'yaml'
 
 const editorContainer = ref(null);
-const props = defineProps(["content"]);
+const emit = defineEmits(['update:modelValue']);
+let editor: any;
 
-const config = stringify(props.content);
+const props = defineProps({
+    modelValue: {
+        type: String,
+        required: true
+    },
+    readOnly: {
+        type: Boolean,
+        default: true
+    }
+});
 
+// const config = stringify(props.modelValue);
+const config = props.modelValue;
 
 onMounted(() => {
     if (editorContainer.value) {
-        const editor = CodeMirror(editorContainer.value, {
+        editor = CodeMirror(editorContainer.value, {
             mode: 'yaml',
             theme: 'default',
             lineNumbers: true,
-            readOnly: true,
+            readOnly: props.readOnly,
             // value: stringify(props.content.value)
             value: config
+        });
+
+        editor.on('change', () => {
+            emit('update:modelValue', editor.getValue());
         });
     }
 });

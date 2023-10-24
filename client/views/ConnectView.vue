@@ -16,8 +16,10 @@ if (isAuthenticated()) {
     }
     const dbx = new Dropbox({ accessToken: accessToken.value });
 
+    // TODO: use cursor to get only new files
     dbx.filesListFolder({ path: '', recursive: true })
     .then(async (response: any) => {
+        console.log(response);
         // TODO: temp fix for type error
         const entries = <Array<any>>response.result.entries;
         const newFiles = entries.filter(entry => entry[".tag"] === "file").slice(0, 6);

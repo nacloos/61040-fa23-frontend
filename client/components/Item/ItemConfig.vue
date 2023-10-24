@@ -13,6 +13,8 @@ const closeConfig = () => {
     emit("closeConfig");
 }
 
+const configContent = props.item.content.config;
+
 </script>
 
 <template>
@@ -28,7 +30,7 @@ const closeConfig = () => {
             </button>
         </div>
         
-        <ConfigEditor :content="props.item"/>
+        <ConfigEditor v-model="configContent"/>
     </div>
 </div>
 </template>

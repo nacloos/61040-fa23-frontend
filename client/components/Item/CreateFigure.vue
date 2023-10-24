@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { fetchy } from "../../utils/fetchy";
+import ConfigEditor from "./ConfigEditor.vue";
 
 const imageURL = ref("");
 const config = ref("");
@@ -37,7 +38,8 @@ async function createFigure(imageURL: string, config: string, note: string) {
     </div>
     <div class="space-y-1">
         <label>Config</label>
-        <textarea v-model="config" class="textarea textarea-bordered w-full" placeholder="config..."></textarea>
+        <!-- <textarea v-model="config" class="textarea textarea-bordered w-full" placeholder="config..."></textarea> -->
+        <ConfigEditor class="" v-model="config" :readOnly="false"/>
     </div>
     <div class="space-y-1">
         <label>Note</label>

@@ -30,6 +30,7 @@ async function getItems() {
         // name: result.name,
         content: {
             imageURL: res.item.image.url,
+            config: res.item.config.content,
             note: res.item.note.content
         }
     })).reverse()
@@ -45,6 +46,10 @@ onBeforeMount(async () => {
 </script>
 
 <template>
+<section v-if="!isLoggedIn">
+<h2 class="flex text-xl justify-center w-full p-20">Please log in!</h2>
+</section>
+
 <!-- TODO: show only accessible items -->
 <div v-if="loaded" class="flex flex-col items-center justify-center">
     <!-- <div class="flex space-x-4"> -->
